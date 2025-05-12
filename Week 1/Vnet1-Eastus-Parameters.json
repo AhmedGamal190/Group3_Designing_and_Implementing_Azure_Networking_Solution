@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "extendedLocation": {
+            "value": {}
+        },
+        "virtualNetworkName": {
+            "value": "Prod-Vnet1-Eastus"
+        },
+        "tagsByResource": {
+            "value": {
+                "Microsoft.Network/virtualNetworks": {},
+                "Microsoft.Network/ddosProtectionPlans": {},
+                "Microsoft.Network/publicIPAddresses": {},
+                "Microsoft.Network/azureFirewalls": {},
+                "Microsoft.Network/bastionHosts": {},
+                "Microsoft.Network/natGateways": {},
+                "Microsoft.Network/publicIPPrefixes": {},
+                "Microsoft.Network/networkSecurityGroups": {}
+            }
+        },
+        "addressSpace": {
+            "value": {
+                "addressPrefixes": [
+                    "10.10.0.0/16"
+                ]
+            }
+        },
+        "natGatewaysWithNewPublicIpAddress": {
+            "value": []
+        },
+        "natGatewaysWithoutNewPublicIpAddress": {
+            "value": []
+        },
+        "natGatewayPublicIpAddressesNewNames": {
+            "value": []
+        },
+        "networkSecurityGroupsNew": {
+            "value": []
+        },
+        "subnets": {
+            "value": [
+                {
+                    "name": "Management-Subnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.10.0.0/26"
+                        ],
+                        "privateEndpointNetworkPolicies": "Disabled"
+                    }
+                },
+                {
+                    "name": "Application-Subnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.10.1.0/24"
+                        ],
+                        "privateEndpointNetworkPolicies": "Disabled"
+                    }
+                },
+                {
+                    "name": "Database-Subnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.10.2.0/24"
+                        ],
+                        "privateEndpointNetworkPolicies": "Disabled"
+                    }
+                },
+                {
+                    "name": "AzureFirewallSubnet",
+                    "properties": {
+                        "addressPrefixes": [
+                            "10.10.0.64/26"
+                        ],
+                        "privateEndpointNetworkPolicies": "Disabled"
+                    }
+                }
+            ]
+        },
+        "ddosProtectionPlanEnabled": {
+            "value": false
+        },
+        "firewallEnabled": {
+            "value": false
+        },
+        "firewallSkuTier": {
+            "value": "Standard"
+        },
+        "firewallPolicyIsNew": {},
+        "firewallPolicyId": {},
+        "firewallPolicyTier": {},
+        "firewallPublicIpAddressIsNew": {
+            "value": true
+        },
+        "firewallPublicIpAddressName": {
+            "value": "prod-vnet1-eastus-firewall"
+        },
+        "bastionEnabled": {
+            "value": false
+        },
+        "bastionPublicIpAddressIsNew": {
+            "value": true
+        },
+        "bastionPublicIpAddressName": {
+            "value": "prod-vnet1-eastus-bastion"
+        },
+        "bastionNsgIsNew": {},
+        "bastionNsgId": {},
+        "encryptionEnabled": {
+            "value": false
+        },
+        "encryptionEnforcement": {
+            "value": "AllowUnencrypted"
+        },
+        "addressSpaceStartingAddressChanged": {
+            "value": true
+        },
+        "addressSpaceAddressSizeChanged": {
+            "value": false
+        },
+        "ipv6Enabled": {
+            "value": false
+        },
+        "defaultSubnetChanged": {
+            "value": true
+        },
+        "subnetsInfo": {
+            "value": [
+                {
+                    "cidr": "10.10.0.0/26",
+                    "name": "Default",
+                    "natGw": "none",
+                    "nsg": "none",
+                    "udr": "none"
+                },
+                {
+                    "cidr": "10.10.1.0/24",
+                    "name": "Default",
+                    "natGw": "none",
+                    "nsg": "none",
+                    "udr": "none"
+                },
+                {
+                    "cidr": "10.10.2.0/24",
+                    "name": "Default",
+                    "natGw": "none",
+                    "nsg": "none",
+                    "udr": "none"
+                },
+                {
+                    "cidr": "10.10.0.64/26",
+                    "name": "Azure Firewall",
+                    "natGw": "none",
+                    "nsg": "none",
+                    "udr": "none"
+                }
+            ]
+        },
+        "subnetCount": {
+            "value": 4
+        }
+    }
+}
