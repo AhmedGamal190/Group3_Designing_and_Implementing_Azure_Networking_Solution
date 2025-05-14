@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "applicationGatewayName": {
+            "value": "App-Gateway"
+        },
+        "tier": {
+            "value": "Standard_v2"
+        },
+        "skuSize": {
+            "value": "Standard_v2"
+        },
+        "capacity": {
+            "value": 0
+        },
+        "subnetName": {
+            "value": "default"
+        },
+        "zones": {
+            "value": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "virtualNetworkName": {
+            "value": "Vnet01"
+        },
+        "virtualNetworkPrefix": {
+            "value": [
+                "10.0.0.0/16"
+            ]
+        },
+        "publicIpZones": {
+            "value": [
+                "1",
+                "2",
+                "3"
+            ]
+        },
+        "publicIpAddressName": {
+            "value": [
+                "Gateway-IP"
+            ]
+        },
+        "sku": {
+            "value": [
+                "Standard"
+            ]
+        },
+        "allocationMethod": {
+            "value": [
+                "Static"
+            ]
+        },
+        "ipAddressVersion": {
+            "value": [
+                "IPv4"
+            ]
+        },
+        "privateIpAddress": {
+            "value": []
+        },
+        "autoScaleMaxCapacity": {
+            "value": 10
+        }
+    }
+}
