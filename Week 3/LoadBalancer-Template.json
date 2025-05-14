@@ -1,0 +1,182 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string"
+        },
+        "tier": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2023-02-01",
+            "name": "[parameters('name')]",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "internal-lb-front",
+                        "properties": {
+                            "privateIPAddress": "10.20.1.100",
+                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/virtualNetworks/Prod-Vnet2-Westus/subnets/Application-Subnet"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "IISserver01-WestUS"
+                    }
+                ],
+                "probes": [
+                    {
+                        "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/loadBalancers/internal-lb/probes/http-probe",
+                        "name": "http-probe",
+                        "properties": {
+                            "protocol": "TCP",
+                            "port": 80,
+                            "requestPath": null,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 1
+                        }
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "httprule",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/loadBalancers/internal-lb/frontendIPConfigurations/internal-lb-front"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "TCP",
+                            "loadDistribution": "Default",
+                            "probe": {
+                                "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/loadBalancers/internal-lb/probes/http-probe"
+                            },
+                            "disableOutboundSnat": true,
+                            "enableTcpReset": true,
+                            "backendAddressPools": [
+                                {
+                                    "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/loadBalancers/internal-lb/backendAddressPools/IISserver01-WestUS"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundRules": []
+            },
+            "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('tier')]"
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "type": "Microsoft.Resources/deployments",
+            "name": "NicUpdate-8eedb8f6-84b4-4104-851f-a0c46b2429f1-20250514191302",
+            "resourceGroup": "Final-Project",
+            "dependsOn": [
+                "Microsoft.Network/loadBalancers/internal-lb"
+            ],
+            "properties": {
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "mode": "Incremental",
+                "parameters": {},
+                "template": {
+                    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "apiVersion": "2022-11-01",
+                            "type": "Microsoft.Network/networkInterfaces",
+                            "name": "iisserver01-westus518",
+                            "location": "westus",
+                            "properties": {
+                                "provisioningState": "Succeeded",
+                                "resourceGuid": "addbead2-6aea-4a4e-b7de-6c9e0e9e1c1d",
+                                "ipConfigurations": [
+                                    {
+                                        "name": "ipconfig1",
+                                        "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/networkInterfaces/iisserver01-westus518/ipConfigurations/ipconfig1",
+                                        "etag": "W/\"ff025c53-614d-4183-bbfd-5e48a3afabd9\"",
+                                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+                                        "properties": {
+                                            "provisioningState": "Succeeded",
+                                            "privateIPAddress": "10.20.1.4",
+                                            "privateIPAllocationMethod": "Dynamic",
+                                            "publicIPAddress": {
+                                                "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/publicIPAddresses/IISserver01-WestUS-ip",
+                                                "properties": {
+                                                    "deleteOption": "Delete"
+                                                }
+                                            },
+                                            "subnet": {
+                                                "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/virtualNetworks/Prod-Vnet2-Westus/subnets/Application-Subnet"
+                                            },
+                                            "primary": true,
+                                            "privateIPAddressVersion": "IPv4",
+                                            "loadBalancerBackendAddressPools": [
+                                                {
+                                                    "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourcegroups/Final-Project/providers/Microsoft.Network/loadBalancers/internal-lb/backendAddressPools/IISserver01-WestUS"
+                                                }
+                                            ],
+                                            "loadBalancerInboundNatRules": []
+                                        }
+                                    }
+                                ],
+                                "dnsSettings": {
+                                    "dnsServers": [],
+                                    "appliedDnsServers": [],
+                                    "internalDomainNameSuffix": "k55ar3e1gxne3bc41wyhcfoo0c.dx.internal.cloudapp.net"
+                                },
+                                "macAddress": "00-22-48-04-D9-9A",
+                                "enableAcceleratedNetworking": true,
+                                "vnetEncryptionSupported": false,
+                                "enableIPForwarding": false,
+                                "disableTcpStateTracking": false,
+                                "networkSecurityGroup": {
+                                    "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/networkSecurityGroups/IISserver01-WestUS-nsg"
+                                },
+                                "primary": true,
+                                "virtualMachine": {
+                                    "id": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Compute/virtualMachines/IISserver01-WestUS"
+                                },
+                                "hostedWorkloads": [],
+                                "tapConfigurations": [],
+                                "nicType": "Standard",
+                                "allowPort25Out": false,
+                                "auxiliaryMode": "None",
+                                "auxiliarySku": "None"
+                            },
+                            "tags": {}
+                        }
+                    ],
+                    "outputs": {}
+                }
+            }
+        }
+    ]
+}
