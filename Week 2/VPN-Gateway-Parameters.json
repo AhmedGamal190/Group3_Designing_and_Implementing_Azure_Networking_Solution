@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "Prod-VPNGW1-Eastus"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "gatewayType": {
+            "value": "Vpn"
+        },
+        "sku": {
+            "value": "VpnGw1"
+        },
+        "vpnGatewayGeneration": {
+            "value": "Generation1"
+        },
+        "vpnType": {
+            "value": "RouteBased"
+        },
+        "subnetId": {
+            "value": "/subscriptions/f9cf8760-9a04-4cf2-86c5-7cedd1e7098e/resourceGroups/Final-Project/providers/Microsoft.Network/virtualNetworks/Prod-Vnet1-Eastus/subnets/GatewaySubnet"
+        },
+        "newPublicIpAddressName": {
+            "value": "Prod-PipGW-Eastus"
+        }
+    }
+}
