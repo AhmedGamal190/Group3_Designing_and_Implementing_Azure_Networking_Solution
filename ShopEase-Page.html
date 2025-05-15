@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --hover-glow: #ff8c00;
+            --text-light: #e0e0e0;
+            --text-muted: #aaa;
+            --accent: #ff6f00;
+            --border-dark: #333;
+            --highlight: #2c2c2c;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: var(--bg-dark);
+            color: var(--text-light);
+        }
+        header {
+            background: var(--highlight);
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header-icons i {
+            font-size: 1.4rem;
+            margin: 0 0.6rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s ease;
+        }
+        .header-icons i:hover {
+            color: var(--hover-glow);
+        }
+        .search-bar input {
+            padding: 0.6rem;
+            border: none;
+            border-radius: 6px;
+            width: 240px;
+            background: #2e2e2e;
+            color: var(--text-light);
+        }
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            background: #181818;
+        }
+        .product {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.3);
+            padding: 1.2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .product:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.5);
+        }
+        .product i {
+            font-size: 2.5rem;
+            margin-bottom: 0.6rem;
+            color: var(--accent);
+            transition: transform 0.2s ease;
+        }
+        .product:hover i {
+            transform: rotate(8deg);
+        }
+        .product h3 {
+            margin: 0.5rem 0 0.2rem;
+            font-size: 1.1rem;
+            color: white;
+        }
+        .price {
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 0.7rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .btn:hover {
+            background: #e65c00;
+            transform: scale(1.05);
+        }
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #222;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .popup.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        footer {
+            background: #1a1a1a;
+            text-align: center;
+            padding: 1.2rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1><i class="fas fa-store"></i> ShopEase</h1>
+            <div class="header-icons">
+                <i class="fas fa-home" title="Home"></i>
+                <i class="fas fa-user-circle" title="Account"></i>
+                <i class="fas fa-shopping-cart" title="Cart" onclick="showPopup('Cart opened')"></i>
+                <i class="fas fa-heart" title="Wishlist" onclick="showPopup('Wishlist opened')"></i>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+        </div>
+    </header>
+
+    <div class="product-list">
+        <div class="product">
+            <i class="fas fa-laptop"></i>
+            <h3>Laptop</h3>
+            <p class="price">$799</p>
+            <button class="btn" onclick="showPopup('Added Laptop to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Smartphone</h3>
+            <p class="price">$499</p>
+            <button class="btn" onclick="showPopup('Added Smartphone to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-tablet-alt"></i>
+            <h3>Tablet</h3>
+            <p class="price">$329</p>
+            <button class="btn" onclick="showPopup('Added Tablet to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-tv"></i>
+            <h3>Smart TV</h3>
+            <p class="price">$699</p>
+            <button class="btn" onclick="showPopup('Added Smart TV to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-blender"></i>
+            <h3>Blender</h3>
+            <p class="price">$59</p>
+            <button class="btn" onclick="showPopup('Added Blender to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-camera"></i>
+            <h3>Camera</h3>
+            <p class="price">$299</p>
+            <button class="btn" onclick="showPopup('Added Camera to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-headphones"></i>
+            <h3>Headphones</h3>
+            <p class="price">$89</p>
+            <button class="btn" onclick="showPopup('Added Headphones to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-gamepad"></i>
+            <h3>Gamepad</h3>
+            <p class="price">$49</p>
+            <button class="btn" onclick="showPopup('Added Gamepad to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-keyboard"></i>
+            <h3>Keyboard</h3>
+            <p class="price">$39</p>
+            <button class="btn" onclick="showPopup('Added Keyboard to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-mouse"></i>
+            <h3>Mouse</h3>
+            <p class="price">$25</p>
+            <button class="btn" onclick="showPopup('Added Mouse to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Smart Bulb</h3>
+            <p class="price">$15</p>
+            <button class="btn" onclick="showPopup('Added Smart Bulb to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-clock"></i>
+            <h3>Smart Watch</h3>
+            <p class="price">$149</p>
+            <button class="btn" onclick="showPopup('Added Smart Watch to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-volume-up"></i>
+            <h3>Soundbar</h3>
+            <p class="price">$199</p>
+            <button class="btn" onclick="showPopup('Added Soundbar to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-speaker"></i>
+            <h3>Bluetooth Speaker</h3>
+            <p class="price">$89</p>
+            <button class="btn" onclick="showPopup('Added Bluetooth Speaker to cart!')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <i class="fas fa-chair"></i>
+            <h3>Gaming Chair</h3>
+            <p class="price">$249</p>
+            <button class="btn" onclick="showPopup('Added Gaming Chair to cart!')">Add to Cart</button>
+        </div>
+    </div>
+        <div class="product">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>Smartphone</h3>
+            <p class="price">$499</p>
+            <button class="btn" onclick="showPopup('Added Smartphone to cart!')">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="popup" id="popup"></div>
+
+    <footer>
+        "Good design is good business." – ShopEase Team
+    </footer>
+
+    <script>
+        function showPopup(message) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>
